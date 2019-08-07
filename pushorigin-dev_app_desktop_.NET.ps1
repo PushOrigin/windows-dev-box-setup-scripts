@@ -4,6 +4,8 @@
 
 Disable-UAC
 
+$ChocoCachePath = "C:\ChocoTemp";
+
 # Get the base URI path from the ScriptToCall value
 $bstrappackage = "-bootstrapPackage"
 $helperUri = $Boxstarter['ScriptToCall']
@@ -37,24 +39,24 @@ executeScript "PushOrigin-Browsers.ps1";
 # visualstudio2017professional
 # visualstudio2017enterprise
 
-choco upgrade -y visualstudio2019community 
-choco upgrade -y visualstudio2019-workload-manageddesktop
-choco upgrade -y visualstudio2019-workload-netcoretools
-choco upgrade -y visualstudio2019-workload-node
-choco upgrade -y visualstudio2019-workload-azure
+choco upgrade -y visualstudio2019community --cacheLocation="$ChocoCachePath"
+choco upgrade -y visualstudio2019-workload-manageddesktop --cacheLocation="$ChocoCachePath"
+choco upgrade -y visualstudio2019-workload-netcoretools --cacheLocation="$ChocoCachePath"
+choco upgrade -y visualstudio2019-workload-node --cacheLocation="$ChocoCachePath"
+choco upgrade -y visualstudio2019-workload-azure --cacheLocation="$ChocoCachePath"
 
-choco upgrade -y sql-server-management-studio
-choco upgrade -y azure-data-studio
+choco upgrade -y sql-server-management-studio --cacheLocation="$ChocoCachePath"
+choco upgrade -y azure-data-studio --cacheLocation="$ChocoCachePath"
 
-choco upgrade -y linqpad
+choco upgrade -y linqpad --cacheLocation="$ChocoCachePath"
 
-choco upgrade -y nodejs
-choco upgrade -y yarn
+choco upgrade -y nodejs --cacheLocation="$ChocoCachePath"
+choco upgrade -y yarn --cacheLocation="$ChocoCachePath"
 
 #--- Utilities ---
-choco upgrade -y beyondcompare
-choco upgrade -y cryptomator
-choco upgrade -y dashlane
+choco upgrade -y beyondcompare --cacheLocation="$ChocoCachePath"
+choco upgrade -y cryptomator --cacheLocation="$ChocoCachePath"
+choco upgrade -y dashlane --cacheLocation="$ChocoCachePath"
 
 #--- reenabling critial items ---
 Enable-UAC

@@ -1,3 +1,3 @@
 #--- Browsers ---
-choco install -y googlechrome
-choco install -y firefox
+choco install -y googlechrome --cacheLocation="$ChocoCachePath" --ignorechecksum;
+choco install -y firefox --cacheLocation="$ChocoCachePath";
