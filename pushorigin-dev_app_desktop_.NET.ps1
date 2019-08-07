@@ -4,7 +4,10 @@
 
 Disable-UAC
 
-$ChocoCachePath = "C:\ChocoTemp";
+#--- Workaround boxstarter/choco issue with infinity temp/chocolatey too long
+#--- path error. https://github.com/chocolatey/boxstarter/issues/241
+$ChocoCachePath = "$env:USERPROFILE\AppData\Local\Temp\chocolatey";
+New-Item -Path $ChocoCachePath -ItemType Directory -Force
 
 # Get the base URI path from the ScriptToCall value
 $bstrappackage = "-bootstrapPackage"
@@ -23,27 +26,19 @@ function executeScript {
 	iex ((new-object net.webclient).DownloadString("$helperUri/$script"))
 }
 
-#--- Setting up Windows ---
-executeScript "PushOrigin-SystemConfiguration.ps1";
-executeScript "PushOrigin-FileExplorerSettings.ps1";
-executeScript "PushOrigin-RemoveDefaultApps.ps1";
-executeScript "PushOrigin-CommonDevTools.ps1";
+#--- Put the items that require a restart first ---
+choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019community;
+choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-manageddesktop;
+choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-node;
+
+#--- Skip until needed ---
+#choco upgrade -y --cacheLocation="$ChocoCachePath"visualstudio2019-workload-azure;
+
+#--- V1.0.0 shows as approved but "possibly broken"? Skip until it's needed ---
+#choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-netcoretools;
+
+#--- Chrome may also require a restart? ---
 executeScript "PushOrigin-Browsers.ps1";
-
-#--- Tools ---
-#--- Installing VS and VS Code with Git
-# See this for install args: https://chocolatey.org/packages/VisualStudio2017Community
-# https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-community
-# https://docs.microsoft.com/en-us/visualstudio/install/use-command-line-parameters-to-install-visual-studio#list-of-workload-ids-and-component-ids
-# visualstudio2017community
-# visualstudio2017professional
-# visualstudio2017enterprise
-
-choco upgrade -y visualstudio2019community --cacheLocation="$ChocoCachePath"
-choco upgrade -y visualstudio2019-workload-manageddesktop --cacheLocation="$ChocoCachePath"
-choco upgrade -y visualstudio2019-workload-netcoretools --cacheLocation="$ChocoCachePath"
-choco upgrade -y visualstudio2019-workload-node --cacheLocation="$ChocoCachePath"
-choco upgrade -y visualstudio2019-workload-azure --cacheLocation="$ChocoCachePath"
 
 choco upgrade -y sql-server-management-studio --cacheLocation="$ChocoCachePath"
 choco upgrade -y azure-data-studio --cacheLocation="$ChocoCachePath"
@@ -54,11 +49,20 @@ choco upgrade -y nodejs --cacheLocation="$ChocoCachePath"
 choco upgrade -y yarn --cacheLocation="$ChocoCachePath"
 
 #--- Utilities ---
-choco upgrade -y beyondcompare --cacheLocation="$ChocoCachePath"
-choco upgrade -y cryptomator --cacheLocation="$ChocoCachePath"
-choco upgrade -y dashlane --cacheLocation="$ChocoCachePath"
+#choco upgrade -y beyondcompare --cacheLocation="$ChocoCachePath"
+#choco upgrade -y cryptomator --cacheLocation="$ChocoCachePath"
+#choco upgrade -y dashlane --cacheLocation="$ChocoCachePath"
 
-#--- reenabling critial items ---
+#--- Setting up Windows, do this last so it doesn't get repeated on every restart ---
+executeScript "PushOrigin-CommonDevTools.ps1";
+executeScript "PushOrigin-SystemConfiguration.ps1";
+executeScript "PushOrigin-FileExplorerSettings.ps1";
+executeScript "PushOrigin-TaskbarSettings.ps1"
+executeScript "PushOrigin-RemoveDefaultApps.ps1";
+
+#--- reenabling critical items ---
 Enable-UAC
 Enable-MicrosoftUpdate
-Install-WindowsUpdate -acceptEula
+
+#--- Right now this is causing errors, run it manually ---
+#Install-WindowsUpdate -acceptEula

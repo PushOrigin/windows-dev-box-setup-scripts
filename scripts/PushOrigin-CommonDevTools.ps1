@@ -1,9 +1,10 @@
 
 # tools we expect devs across many scenarios will want
-choco upgrade -y vscode --cacheLocation="$ChocoCachePath";
-choco upgrade -y git-fork
-choco upgrade -y git --package-parameters="'/GitAndUnixToolsOnPath /WindowsTerminal'" --cacheLocation="$ChocoCachePath";
-#choco upgrade -y sourcetree --cacheLocation="$ChocoCachePath";
-#choco upgrade -y python --cacheLocation="$ChocoCachePath";
-#choco upgrade -y 7zip.install --cacheLocation="$ChocoCachePath";
-choco upgrade -y sysinternals --cacheLocation="$ChocoCachePath";
+choco upgrade -y --cacheLocation="$ChocoCachePath" vscode;
+choco upgrade -y --cacheLocation="$ChocoCachePath" git-fork;
+choco upgrade -y --cacheLocation="$ChocoCachePath" git --package-parameters="'/GitAndUnixToolsOnPath /WindowsTerminal'";
+#choco upgrade -y --cacheLocation="$ChocoCachePath" sourcetree;
+#--- Python is now a store app?
+#choco upgrade -y --cacheLocation="$ChocoCachePath" python;
+#choco upgrade -y --cacheLocation="$ChocoCachePath" 7zip.install;
+choco upgrade -y --cacheLocation="$ChocoCachePath" sysinternals;
