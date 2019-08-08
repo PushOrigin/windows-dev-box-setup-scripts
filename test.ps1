@@ -27,7 +27,6 @@ function executeScript {
 }
 
 executeScript "PushOrigin-UnpinAllStartMenuItems.ps1"
-executeScript "PushOrigin-RemoveDefaultApps.ps1";
 
 #--- reenabling critical items ---
 Enable-UAC
