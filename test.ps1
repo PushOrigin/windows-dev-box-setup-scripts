@@ -26,7 +26,7 @@ function executeScript {
 	Invoke-Expression ((new-object net.webclient).DownloadString("$helperUri/$script"))
 }
 
-executeScript "PushOrign-UnpinAllStartMenuItems.ps1"
+executeScript "PushOrigin-UnpinAllStartMenuItems.ps1"
 executeScript "PushOrigin-RemoveDefaultApps.ps1";
 
 #--- reenabling critical items ---
