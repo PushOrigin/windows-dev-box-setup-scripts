@@ -66,3 +66,5 @@ Enable-MicrosoftUpdate
 
 #--- Right now this is causing errors, run it manually ---
 #Install-WindowsUpdate -acceptEula
+
+Write-Host "TODO: Install updates, restart to apply taskbar settings."
