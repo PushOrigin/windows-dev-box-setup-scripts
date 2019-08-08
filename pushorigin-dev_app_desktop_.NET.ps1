@@ -60,7 +60,7 @@ executeScript "PushOrigin-CommonDevTools.ps1";
 executeScript "PushOrigin-SystemConfiguration.ps1";
 executeScript "PushOrigin-FileExplorerSettings.ps1";
 executeScript "PushOrigin-TaskbarSettings.ps1"
-executeScript "PushOrign-UnpinAllStartMenuItems.ps1"
+executeScript "UnpinAllStartMenuItems.ps1"
 executeScript "PushOrigin-RemoveDefaultApps.ps1";
 
 #--- reenabling critical items ---
