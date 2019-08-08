@@ -8,12 +8,21 @@ Write-Host "Uninstall some applications that come with Windows out of the box" -
 # https://gist.github.com/alirobe/7f3b34ad89a159e6daa1
 # https://github.com/W4RH4WK/Debloat-Windows-10/blob/master/scripts/remove-default-apps.ps1
 
+function unpinApp {
+	Param ([string]$appName)
+	Write-Output "Trying to unpin $appName"
+	(New-Object -Com Shell.Application).NameSpace('shell:::{4234d49b-0245-4df3-b780-3893943456e1}').Items() |`
+		Where-Object{$_.Name -eq $appName}.Verbs() | Where-Object{$_.Name.replace('&','') -match 'From "Start" Unpin|Unpin from Start'} | ForEach-Object{$_.DoIt()}
+}
+
 function removeApp {
 	Param ([string]$appName)
 	Write-Output "Trying to remove $appName"
+	Get-AppxPackage $appName -AllUsers | pin
 	Get-AppxPackage $appName -AllUsers | Remove-AppxPackage
 	Get-AppXProvisionedPackage -Online | Where DisplayName -like $appName | Remove-AppxProvisionedPackage -Online
 }
+
 
 $applicationList = @(
 	"Microsoft.BingFinance"

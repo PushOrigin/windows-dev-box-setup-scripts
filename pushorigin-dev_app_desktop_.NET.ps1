@@ -22,8 +22,8 @@ write-host "helper script base URI is $helperUri"
 
 function executeScript {
     Param ([string]$script)
-    write-host "executing $helperUri/$script ..."
-	iex ((new-object net.webclient).DownloadString("$helperUri/$script"))
+    Write-Host "executing $helperUri/$script ..."
+	Invoke-Expression ((new-object net.webclient).DownloadString("$helperUri/$script"))
 }
 
 #--- Put the items that require a restart first ---
@@ -37,10 +37,12 @@ choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-nod
 #--- V1.0.0 shows as approved but "possibly broken"? Skip until it's needed ---
 #choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-netcoretools;
 
-#--- Chrome may also require a restart? ---
+#--- Chrome requires a restart ---
 executeScript "PushOrigin-Browsers.ps1";
 
+#--- SSMS requires a restart ---
 choco upgrade -y sql-server-management-studio --cacheLocation="$ChocoCachePath"
+
 choco upgrade -y azure-data-studio --cacheLocation="$ChocoCachePath"
 
 choco upgrade -y linqpad --cacheLocation="$ChocoCachePath"
@@ -58,6 +60,7 @@ executeScript "PushOrigin-CommonDevTools.ps1";
 executeScript "PushOrigin-SystemConfiguration.ps1";
 executeScript "PushOrigin-FileExplorerSettings.ps1";
 executeScript "PushOrigin-TaskbarSettings.ps1"
+executeScript "PushOrign-UnpinAllStartMenuItems.ps1"
 executeScript "PushOrigin-RemoveDefaultApps.ps1";
 
 #--- reenabling critical items ---
