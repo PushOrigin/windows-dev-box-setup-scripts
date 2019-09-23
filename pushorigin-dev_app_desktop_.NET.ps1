@@ -3,6 +3,7 @@
 # Common dev settings for desktop app development
 
 Disable-UAC
+Invoke-Reboot
 
 #--- Workaround boxstarter/choco issue with infinity temp/chocolatey too long
 #--- path error. https://github.com/chocolatey/boxstarter/issues/241
@@ -29,6 +30,7 @@ function executeScript {
 #--- Put the items that require a restart first ---
 choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019community;
 choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-manageddesktop;
+choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-netcoretools;
 choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-node;
 
 #--- Skip until needed ---
@@ -66,6 +68,7 @@ executeScript "PushOrigin-RemoveDefaultApps.ps1";
 #--- reenabling critical items ---
 Enable-UAC
 Enable-MicrosoftUpdate
+Invoke-Reboot
 
 #--- Right now this is causing errors, run it manually ---
 #Install-WindowsUpdate -acceptEula
