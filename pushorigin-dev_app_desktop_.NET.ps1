@@ -71,3 +71,5 @@ Enable-MicrosoftUpdate
 #Install-WindowsUpdate -acceptEula
 
 Write-Host "TODO: Install updates, restart to apply taskbar settings."
+Write-Host "Install Windows Terminal."
+Write-Host "Install WSL, Ubuntu."
