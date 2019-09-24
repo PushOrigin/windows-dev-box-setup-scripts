@@ -62,7 +62,7 @@ executeScript "PushOrigin-CommonDevTools.ps1";
 executeScript "PushOrigin-SystemConfiguration.ps1";
 executeScript "PushOrigin-FileExplorerSettings.ps1";
 executeScript "PushOrigin-TaskbarSettings.ps1"
-executeScript "UnpinAllStartMenuItems.ps1"
+#executeScript "UnpinAllStartMenuItems.ps1"
 executeScript "PushOrigin-RemoveDefaultApps.ps1";
 
 #--- reenabling critical items ---
@@ -73,6 +73,10 @@ Invoke-Reboot
 #--- Right now this is causing errors, run it manually ---
 #Install-WindowsUpdate -acceptEula
 
-Write-Host "TODO: Install updates, restart to apply taskbar settings."
+Write-Host "TODO:"
+Write-Host "-------------------------" 
+Write-Host "Install updates." 
+Write-Host "Restart to apply taskbar settings."
 Write-Host "Install Windows Terminal."
 Write-Host "Install WSL, Ubuntu."
+Write-Host "Clean up start menu."
