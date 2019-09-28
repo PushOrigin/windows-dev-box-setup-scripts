@@ -10,22 +10,20 @@ Write-Host "Uninstall some applications that come with Windows out of the box" -
 
 function unpinApp {
 	Param ([string]$appName)
-	Write-Output "Trying to unpin $appName"
-	(New-Object -Com Shell.Application).NameSpace('shell:::{4234d49b-0245-4df3-b780-3893943456e1}').Items() |`
-		Where-Object{$_.Name -eq $appName}.Verbs() | Where-Object{$_.Name.replace('&','') -match 'From "Start" Unpin|Unpin from Start'} | ForEach-Object{$_.DoIt()}
+	Write-Host "Trying to unpin $appName" -ForegroundColor "Yellow"
+	((New-Object -Com Shell.Application).NameSpace('shell:::{4234d49b-0245-4df3-b780-3893943456e1}').Items() | ?{$_.Name -eq $appname}) | %{$_.Verbs()} | ?{$_.Name.replace('&','') -match 'From "Start" UnPin|Unpin from Start'} | ?{$_ -ne $null} | %{$_.DoIt()}
 }
 
 function removeApp {
 	Param ([string]$appName)
-	Write-Output "Trying to remove $appName"
-	Get-AppxPackage $appName -AllUsers | pin
+	Write-Host "Trying to remove $appName" -ForegroundColor "Yellow"
+	unpinApp $appName
 	Get-AppxPackage $appName -AllUsers | Remove-AppxPackage
 	Get-AppXProvisionedPackage -Online | Where DisplayName -like $appName | Remove-AppxProvisionedPackage -Online
 }
 
 
 $applicationList = @(
-	"Microsoft.BingFinance"
 	"Microsoft.3DBuilder"
 	"Microsoft.BingFinance"
 	"Microsoft.BingNews"
