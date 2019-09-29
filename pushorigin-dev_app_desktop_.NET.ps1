@@ -29,6 +29,10 @@ choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019community;
 choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-manageddesktop;
 choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-netcoretools;
 choco upgrade -y --cacheLocation="$ChocoCachePath" visualstudio2019-workload-node;
+#--- Add additional targeting packs that may not be included ---
+choco upgrade -y --cacheLocation="$ChocoCachePath" netfx-4.7.2-devpack
+choco upgrade -y --cacheLocation="$ChocoCachePath" netfx-4.8-devpack
+
 
 #--- Skip until needed ---
 #choco upgrade -y --cacheLocation="$ChocoCachePath"visualstudio2019-workload-azure;
